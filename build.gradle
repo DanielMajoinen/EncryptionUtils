@@ -1,9 +1,9 @@
 apply plugin: "jacoco"
-apply plugin: "java"            // Apply the java plugin to add support for Java
-apply plugin: "org.sonarqube"   // Apply SonarQube plugin
+apply plugin: "java"
+apply plugin: "org.sonarqube"
 
 // Variables
-def sonarqubeURL        = "http://d.majoinen.com/sonarqube"
+def sonarqubeURL = "http://d.majoinen.com/sonarqube"
 
 buildscript {
     repositories {
@@ -19,23 +19,13 @@ repositories {
 }
 
 dependencies {
-    compile     "com.google.guava:guava:20.0"                   // Guava
-    compile     "org.apache.logging.log4j:log4j-api:2.8.1"      // log4j-api
-    compile     "org.apache.logging.log4j:log4j-core:2.8.1"     // log4j-core
+    compile files('libs/DatabaseUtils-1.0.jar')
+    compile     "com.google.guava:guava:22.0"                   // Guava
+    compile     "org.apache.logging.log4j:log4j-api:2.8.2"      // log4j-api
+    compile     "org.apache.logging.log4j:log4j-core:2.8.2"     // log4j-core
+    compile     "org.xerial:sqlite-jdbc:3.19.3"                 // SQLite
     testCompile "junit:junit:4.12"                              // JUnit
-}
-
-// Package the app into a jar - optional version number
-jar {
-    from {
-        configurations.compile.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
-    // If the buildNumber property is provided, name the build accordingly
-    if (project.hasProperty('branchName') && project.hasProperty('buildNumber')) {
-        version = "$branchName-$buildNumber"
-    }
+    testCompile "org.mockito:mockito-core:2.+"                  // Mockito
 }
 
 // Run code through SonarQube quality tests
