@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/EncryptionUtils.iml" filepath="$PROJECT_DIR$/.idea/modules/EncryptionUtils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/EncryptionUtils_main.iml" filepath="$PROJECT_DIR$/.idea/modules/EncryptionUtils_main.iml" group="EncryptionUtils" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/EncryptionUtils_test.iml" filepath="$PROJECT_DIR$/.idea/modules/EncryptionUtils_test.iml" group="EncryptionUtils" />
+    </modules>
+  </component>
+</project>
