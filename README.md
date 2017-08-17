@@ -7,8 +7,7 @@ Usage
 Generate a random encryption key:
 
     /* Generate a random encryption key */
-    SecretKey dataKey = EncryptionKeyGenerator
-      .generateRandomKey("AES", KEY_LENGTH);
+    SecretKey dataKey = EncryptionKeyGenerator.generateRandomKey("AES", KEY_LENGTH);
 
 Generate randomised parameters, such as IV, Salt and iterations:
 
@@ -38,11 +37,9 @@ Derive encryption key (Bouncy Castle):
 Encrypt something:
 
     /* Use encryptionKey to encrypt data */
-    byte[] encryptedData = Cipher.encrypt(data, iv, encryptionKey, 
-      "AES/CBC/PKCS5Padding");
+    byte[] encryptedData = Cipher.encrypt(data, iv, encryptionKey, "AES/CBC/PKCS5Padding");
 
 Decrypt something:
 
-    /* Use encryptionKey to encrypt data */
-    byte[] decryptedData = Cipher.decrypt(data, iv, encryptionKey, 
-      "AES/CBC/PKCS5Padding");
+    /* Use encryptionKey to decrypt data */
+    byte[] decryptedData = Cipher.decrypt(data, iv, encryptionKey, "AES/CBC/PKCS5Padding");
