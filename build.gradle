@@ -4,6 +4,7 @@ apply plugin: "org.sonarqube"
 
 // Variables
 def sonarqubeURL = "http://d.majoinen.com/sonarqube"
+version = '1.0'
 
 buildscript {
     repositories {
@@ -19,11 +20,9 @@ repositories {
 }
 
 dependencies {
-    compile files('libs/DatabaseUtils-1.0.jar')
-    compile     "com.google.guava:guava:22.0"                   // Guava
-    compile     "org.apache.logging.log4j:log4j-api:2.8.2"      // log4j-api
-    compile     "org.apache.logging.log4j:log4j-core:2.8.2"     // log4j-core
-    compile     "org.xerial:sqlite-jdbc:3.19.3"                 // SQLite
+    compile     "org.bouncycastle:bcprov-jdk15on:1.57"          // BC
+    testCompile files('libs/DatabaseUtils-1.0.jar')             // DBUtils
+    testCompile "org.xerial:sqlite-jdbc:3.19.3"                 // SQLite
     testCompile "junit:junit:4.12"                              // JUnit
     testCompile "org.mockito:mockito-core:2.+"                  // Mockito
 }
