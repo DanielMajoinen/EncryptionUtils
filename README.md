@@ -16,7 +16,7 @@ Generate randomised parameters, such as IV, Salt and iterations:
     byte[] iv = Tools.generateRandomBytes(INIT_VECTOR_SIZE);
     int iterations = Tools.rng(MIN_ITERATIONS, MAX_ITERATIONS);
     
-Derive encryption key (Java 1.8):
+Derive encryption key (Java 8):
 
     /* Derive encryption key */
     SecretKey dataKeyEncryptionKey = new PBEKeyBuilder()
