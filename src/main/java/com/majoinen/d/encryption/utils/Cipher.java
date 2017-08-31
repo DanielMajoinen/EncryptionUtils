@@ -7,9 +7,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import java.security.*;
 
 /**
  * Encrypt or Decrypt a byte array.
@@ -45,6 +43,25 @@ public final class Cipher {
     }
 
     /**
+     * Encrypt the supplied input with the supplied Public Key, using the
+     * supplied encryption algorithm.
+     *
+     * @param input The input to encrypt.
+     * @param key The Public Key to use.
+     * @param algorithm The encryption algorithm to use.
+     * @return The input data encrypted, or null if a BadPaddingException
+     * occurs.
+     * @throws EncryptionUtilsException If any exception occurs during the
+     * encryption process.
+     */
+    public static byte[] encrypt(byte[] input, PublicKey key, String algorithm)
+      throws EncryptionUtilsException {
+        javax.crypto.Cipher cipher = getCipherInstance(algorithm);
+        initCipher(cipher, javax.crypto.Cipher.ENCRYPT_MODE, key);
+        return doFinal(cipher, input);
+    }
+
+    /**
      * Decrypt the supplied input with the supplied encryption key, using the
      * supplied encryption algorithm.
      *
@@ -63,6 +80,26 @@ public final class Cipher {
         IvParameterSpec iv = new IvParameterSpec(initVector);
         javax.crypto.Cipher cipher = getCipherInstance(algorithm);
         initCipher(cipher, javax.crypto.Cipher.DECRYPT_MODE, key, iv);
+        return doFinal(cipher, input);
+    }
+
+    /**
+     * Decrypt the supplied input with the supplied Private Key, using the
+     * supplied algorithm. Used with asymmetric encryption.
+     *
+     * @param input The input to decrypt.
+     * @param key The Private Key to decrypt the data with.
+     * @param algorithm The encryption algorithm to used when the input data
+     * was encrypted.
+     * @return The input data decrypted, or null if a BadPaddingException
+     * occurs.
+     * @throws EncryptionUtilsException If any exception occurs during the
+     * decryption process.
+     */
+    public static byte[] decrypt(byte[] input, PrivateKey key, String algorithm)
+      throws EncryptionUtilsException {
+        javax.crypto.Cipher cipher = getCipherInstance(algorithm);
+        initCipher(cipher, javax.crypto.Cipher.DECRYPT_MODE, key);
         return doFinal(cipher, input);
     }
 
@@ -109,6 +146,27 @@ public final class Cipher {
         } catch(InvalidAlgorithmParameterException e) {
             throw new EncryptionUtilsException(EXCEPTION_PREFIX +
               "Invalid algorithm parameter", e);
+        }
+    }
+
+    /**
+     * Initialize the cipher into the supplied mode, with the supplied key.
+     * Used with asymmetric encryption.
+     *
+     * @param cipher The cipher to initialize.
+     * @param mode The mode in which to initialize it to.
+     * @param key The encryption key.
+     * @throws EncryptionUtilsException If an InvalidKeyException or
+     * InvalidAlgorithmParameterException occurs during the initialization
+     * process.
+     */
+    private static void initCipher(javax.crypto.Cipher cipher, int mode,
+      Key key) throws EncryptionUtilsException {
+        try {
+            cipher.init(mode, key);
+        } catch(InvalidKeyException e) {
+            throw new EncryptionUtilsException(EXCEPTION_PREFIX +
+              "Invalid Key while encrypting", e);
         }
     }
 
