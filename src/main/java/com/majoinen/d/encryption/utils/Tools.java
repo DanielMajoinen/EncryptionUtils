@@ -3,7 +3,6 @@ package com.majoinen.d.encryption.utils;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -14,7 +13,12 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public final class Tools {
 
+    public static final String ALPHA_NUMERIC =
+      "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
     private static final String DELIMITER = ":";
+
+    private static SecureRandom random = new SecureRandom();
 
     private Tools() { }
 
@@ -66,10 +70,23 @@ public final class Tools {
      * @return An array of random bytes.
      */
     public static byte[] generateRandomBytes(int size) {
-        final Random random = new SecureRandom();
         byte[] salt = new byte[size];
         random.nextBytes(salt);
         return salt;
+    }
+
+    /**
+     * Generate a random String at the desired length
+     *
+     * @param length Desired length of random string.
+     * @param chars String of all possible characters.
+     * @return The randomly generated string.
+     */
+    public static String generateRandomString(int length, String chars) {
+        StringBuilder stringBuilder = new StringBuilder(length);
+        for( int i = 0; i < length; i++ )
+            stringBuilder.append(chars.charAt(random.nextInt(chars.length())));
+        return stringBuilder.toString();
     }
 
     /**
